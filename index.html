@@ -152,6 +152,33 @@
 			return needResize;
 
 		}
+		function render( time ) {
+			const delta = clock.getDelta();
+
+			//only required if FirstPersonControls is used
+			if (controlFirstPerson) {
+				controls.update( delta );
+			}
+
+			if (resizeRendererToDisplaySize( renderer )) {
+				const canvas = renderer.domElement;
+				camera.aspect = canvas.clientWidth / canvas.clientHeight;
+				camera.updateProjectionMatrix();
+
+				//only required if FirstPersonControls is used
+				if (controlFirstPerson) {
+					controls.handleResize();
+				}
+			}
+
+			renderer.render( scene, camera );
+
+			requestAnimationFrame( render );
+		}
+
+		requestAnimationFrame( render );
+
+	}
 
 </script>
 
